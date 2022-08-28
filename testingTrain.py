@@ -12,3 +12,5 @@ from tensorflow.keras import layers
 import time
 
 from IPython import display
+
+(train_images, train_labels), (_, _) = tf.keras.datasets.mnist.load_data()
