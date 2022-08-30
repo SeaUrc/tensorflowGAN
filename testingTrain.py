@@ -190,3 +190,6 @@ with imageio.get_writer(anim_file, mode='I') as writer:
     writer.append_data(image)
   image = imageio.imread(filename)
   writer.append_data(image)
+
+import tensorflow_docs.vis.embed as embed
+embed.embed_file(anim_file)
