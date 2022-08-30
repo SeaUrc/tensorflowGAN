@@ -175,7 +175,7 @@ train(train_dataset, EPOCHS)
 # checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))   #restore last checkpoint
 
 # Display a single image using the epoch number
-def display_image(epoch_no):
+""" def display_image(epoch_no):
   return PIL.Image.open('image_at_epoch_{:04d}.png'.format(epoch_no))
 
 display_image(EPOCHS)
@@ -192,4 +192,4 @@ with imageio.get_writer(anim_file, mode='I') as writer:
   writer.append_data(image)
 
 import tensorflow_docs.vis.embed as embed
-embed.embed_file(anim_file)
+embed.embed_file(anim_file) """
