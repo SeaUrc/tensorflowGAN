@@ -137,8 +137,11 @@ def train(dataset, epochs):
   for epoch in range(epochs):
     start = time.time()
 
+    i=1
     for image_batch in dataset:
+      print('Training step ' + str(i))
       train_step(image_batch)
+      i += 1
 
     # Produce images for the GIF as you go
     display.clear_output(wait=True)
