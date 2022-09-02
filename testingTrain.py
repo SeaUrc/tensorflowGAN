@@ -51,14 +51,6 @@ def make_generator_model():
     return model
 
 
-generator = make_generator_model()
-
-noise = tf.random.normal([1, 100])
-generated_image = generator(noise, training=False)
-
-plt.imshow(generated_image[0, :, :, 0], cmap='gray')
-
-
 def make_discriminator_model():
     model = tf.keras.Sequential()
     model.add(layers.Conv2D(64, (5, 5), strides=(2, 2), padding='same',
@@ -75,11 +67,6 @@ def make_discriminator_model():
 
     return model
 
-
-discriminator = make_discriminator_model()
-decision = discriminator(generated_image)
-print(decision)
-
 # This method returns a helper function to compute cross entropy loss
 cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True)
 
@@ -95,15 +82,19 @@ def generator_loss(fake_output):
 generator_optimizer = tf.keras.optimizers.Adam(1e-4)
 discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
 
+discriminator = make_discriminator_model()
+generator = make_generator_model()
+
 checkpoint_dir = './training_checkpoints'
 checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
                                  generator=generator,
-                                 discriminator=discriminator)
+                                 discriminator=discriminator,
+                                 gan_model = )
 
 
-EPOCHS = 10
+EPOCHS = 1
 noise_dim = 100
 num_examples_to_generate = 16
 
