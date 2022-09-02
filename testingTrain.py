@@ -135,12 +135,13 @@ def train(dataset, epochs):
 
     # Produce images for the GIF as you go
     display.clear_output(wait=False) #changed to false
+    print('before display imgs')
     generate_and_save_images(generator,
                              epoch + 1,
                              seed)
-
+    print('before epoch attempt save')
     # Save the model every 15 epochs
-    if (epoch + 1) % 15 == 0:
+    if (epoch + 1) % 1 == 0:
       checkpoint.save(file_prefix = checkpoint_prefix)
 
     print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
