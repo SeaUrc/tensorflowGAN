@@ -93,7 +93,7 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator=discriminator)
 
 
-EPOCHS = 1
+EPOCHS = 10
 noise_dim = 100
 num_examples_to_generate = 16
 
@@ -136,12 +136,12 @@ def train(dataset, epochs):
     # Produce images for the GIF as you go
     display.clear_output(wait=False) #changed to false
     print('before display imgs')
-    generate_and_save_images(generator,
-                             epoch + 1,
-                             seed)
+    # generate_and_save_images(generator,
+    #                         epoch + 1,
+    #                         seed)
     print('before epoch attempt save')
     # Save the model every 15 epochs
-    if (epoch + 1) % 1 == 0:
+    if (epoch + 1) % 5 == 0:
       checkpoint.save(file_prefix = checkpoint_prefix)
 
     print ('Time for epoch {} is {} sec'.format(epoch + 1, time.time()-start))
@@ -155,8 +155,9 @@ def train(dataset, epochs):
 def generate_and_save_images(model, epoch, test_input):
   # Notice `training` is set to False.
   # This is so all layers run in inference mode (batchnorm).
+  print('before model pred')
   predictions = model(test_input, training=False)
-
+  print('after model pred')
   fig = plt.figure(figsize=(4, 4))
 
   for i in range(predictions.shape[0]):
