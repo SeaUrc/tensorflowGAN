@@ -90,8 +90,7 @@ checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
 checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
                                  generator=generator,
-                                 discriminator=discriminator,
-                                 gan_model = )
+                                 discriminator=discriminator)
 
 
 EPOCHS = 1
@@ -135,7 +134,7 @@ def train(dataset, epochs):
       i += 1
 
     # Produce images for the GIF as you go
-    display.clear_output(wait=True)
+    display.clear_output(wait=False) #changed to false
     generate_and_save_images(generator,
                              epoch + 1,
                              seed)
