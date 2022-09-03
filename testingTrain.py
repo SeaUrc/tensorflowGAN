@@ -91,9 +91,9 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
                                  generator=generator,
                                  discriminator=discriminator)
-manager = tf.train.CheckpointManager(checkpoint, checkpoint_prefix, max_to_keep=15)
+manager = tf.train.CheckpointManager(checkpoint, checkpoint_dir, max_to_keep=15)
 
-EPOCHS = 120
+EPOCHS = 15
 noise_dim = 100
 num_examples_to_generate = 16
 
@@ -124,6 +124,14 @@ def train_step(images):
 
 
 def train(dataset, epochs):
+
+  checkpoint.restore(manager.latest_checkpoint)
+
+  if manager.latest_checkpoint:
+    print("Restored from {}".format(manager.latest_checkpoint))
+  else:
+    print("Initializing from scratch.")
+
   for epoch in range(epochs):
     start = time.time()
 
