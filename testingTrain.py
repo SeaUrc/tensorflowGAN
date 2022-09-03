@@ -91,7 +91,7 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator_optimizer=discriminator_optimizer,
                                  generator=generator,
                                  discriminator=discriminator)
-
+manager = tf.train.CheckpointManager(checkpoint, checkpoint_prefix, max_to_keep=15)
 
 EPOCHS = 120
 noise_dim = 100
