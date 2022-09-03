@@ -64,3 +64,36 @@ discriminator_optimizer = tf.keras.optimizers.Adam(1e-4)
 
 discriminator = make_discriminator_model()
 generator = make_generator_model()
+
+checkpoint_dir = './training_checkpoints'
+checkpoint_prefix = os.path.join(checkpoint_dir, "ckpt")
+checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
+                                 discriminator_optimizer=discriminator_optimizer,
+                                 generator=generator,
+                                 discriminator=discriminator)
+manager = tf.train.CheckpointManager(checkpoint, checkpoint_dir, max_to_keep=15)
+
+noise_dim = 100
+num_examples_to_generate = 16
+
+seed = tf.random.normal([num_examples_to_generate, noise_dim])
+
+checkpoint.restore(manager.latest_checkpoint)
+
+def generate_and_save_images(model, test_input, *args, **kwargs):
+  # Notice `training` is set to False.
+  # This is so all layers run in inference mode (batchnorm).
+  print('before model pred')
+  predictions = model(test_input, training=False)
+  print('after model pred')
+  fig = plt.figure(figsize=(4, 4))
+
+  for i in range(predictions.shape[0]):
+      plt.subplot(4, 4, i+1)
+      plt.imshow(predictions[i, :, :, 0] * 127.5 + 127.5, cmap='gray')
+      plt.axis('off')
+
+  # plt.savefig('image_at_epoch_{:04d}.png'.format(epoch))
+  plt.show()
+
+generate_and_save_images(generator,seed)
